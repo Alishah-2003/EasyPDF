@@ -13,7 +13,7 @@ def signup(request):
         password=request.POST["password"]
 
         if User.objects.filter(username=email).exists():
-            return render(request, "authentication/login.html", {
+            return render(request, "authentication/signup.html", {
                 "error": "A user with this email already exists, please login instead."
             })
         u=User.objects.create_user(
@@ -40,7 +40,7 @@ def login_user(request):
             login(request,user)
             return redirect("/uploadfile/")
         else:
-            return render(request,"authentication/signup.html",{
+            return render(request,"authentication/login.html",{
                 "error":"No such user exists, please sign up first."
             })
     return render(request,"authentication/login.html")
