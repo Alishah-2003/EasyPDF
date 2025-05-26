@@ -5,6 +5,7 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from django.contrib import messages
+from django.urls import reverse
 
 @login_required
 def upload_file(request):
@@ -65,7 +66,7 @@ def select_share(request):
 def generate_link(request,pdf_id):
     pdf=get_object_or_404(PDFUpload, id=pdf_id, user=request.user)
     share_link, created = SharePDF.objects.get_or_create(pdf=pdf)
-    share_url=request.build_absolute_uri(f'uploadfile/share_file/{share_link.link}/')
+    share_url=request.build_absolute_uri(reverse('share_file', kwargs={'link':share_link.link}))
 
     return render(request,"uploadfile/sharefile.html", {
         'pdf': pdf,
@@ -78,7 +79,7 @@ def generate_link(request,pdf_id):
 def share_file(request, link):
     shared_pdf = get_object_or_404(SharePDF, link=link)
     pdf=shared_pdf.pdf
-    share_url = request.build_absolute_uri(f'/share_file/{link}/')
+    share_url = request.build_absolute_uri(reverse('share_file',kwargs={'link':link}))
 
     if request.method=="POST":
         comment_text = request.POST.get('comment')
