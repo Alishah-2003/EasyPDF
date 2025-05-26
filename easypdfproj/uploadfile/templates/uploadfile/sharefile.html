@@ -1,0 +1,240 @@
+{% extends "uploadfile/uploadformat.html" %}
+{% load static %}
+{% block content %}
+<head>
+    <title>Share Your File</title>
+
+<style>
+    
+    .split{
+        flex:1;
+        display: flex;
+    }
+    .error_msg{
+        color: #ff6b6b;
+        background: rgba(255, 107, 107, 0.1);
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-weight: bold;
+    }
+
+    .show_comment{
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding:14px;
+        margin-bottom: 10px;
+        animation: fadeInUp 1s ease 0.8s;
+        
+    }
+    .container_share{
+        
+        gap:20px;
+        margin:1%;
+    }
+    .container_comment{
+        background: transparent;
+        backdrop-filter: blur(40px);
+        padding: 20px;
+        width:100%;
+        border-radius: 25px;
+        animation: fadeInUp 1s ease 0.3s;
+        margin:20px 10px;
+    }
+    h1{
+        color: white;
+        font-weight: bold;
+        font-family: 'Montserrat';
+        text-align: center;
+        padding:0;
+        font-size: 40px;
+        margin:20px 0px;
+    }
+    .pdf_file_style{
+        display:flex;
+        justify-content: center;
+    }
+    h4{
+        font-size: 25px;
+        
+    }
+    body{
+        font-family: 'Montserrat';
+        margin: 0;
+        padding: 20px;
+    }
+    .container_share{
+        max-height: fit-content;
+        width: 100%;
+        margin: 20px 10px;
+        padding: 20px;
+        background: transparent;
+        backdrop-filter: blur(40px);
+        border-radius: 25px;
+        animation: fadeInUp 1s ease 0.3s;
+        
+    }
+
+    .buttonStyle{
+        background-color: white;
+        color: rgb(1, 42, 1);
+        font-family: 'Montserrat';
+        font-size: 1rem;
+        font-weight: bold;
+        padding:15px;
+        border-radius: 20px;
+        margin-top:10px;
+        margin-bottom: 10px;
+    
+    }
+   
+    h3{
+        color: white;
+        font-family: 'Montserrat';
+        font-size: 18px;
+        font-weight: bold;
+        
+    }
+    .pdf_file_style{
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+    .pdf_file_style h4{
+        color: white;
+        font-size: 18px;
+        margin: 0;
+    }
+    .pdf_file_style a{
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+    }
+    .pdf_file_style a:hover{
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.05);
+    }
+    .pdf_link_view{
+        margin: 15px 0;
+        position: relative;
+    }
+    .pdf_link_view input{
+        width: 100%;
+        padding: 12px 50px 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-family: 'Montserrat';
+        font-size: 1rem;
+        font-weight: 600;
+        background: white;
+        color: #333;
+        box-sizing: border-box;
+    }
+    .no_comm{
+        color: #ccc;
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+    }
+    .single_comment{
+        display: flex;
+        flex-direction: column;
+        padding-top: 8px;
+
+    }
+    label{
+        font-size: 14px;
+        font-weight: bold;
+        font-family: 'Montserrat';
+        padding:8px 0;
+    }
+    textarea{
+        border-radius: 10px;
+        padding:10px;
+        font-family: 'Montserrat';
+        font-size: 14px;
+    }
+    .single_comm_name{
+        border-radius: 10px;
+        padding:10px;
+        font-family: 'Montserrat';
+        font-size: 14px;
+    }
+    .show_comment p{
+        padding:6px 0;
+        font-size: 16px;
+        
+    }
+    strong{
+        text-decoration: underline;
+        font-size: 18px;
+    }
+    small{
+        font-size: 12px;
+    }
+
+</style>
+</head>
+<body>
+    <h1>{{ pdf.name }} Details</h1>
+    <div class="split">
+        
+    <div class="container_share">
+        
+        <div class="pdf_file_style">
+            <h4>PDF File: </h4>
+            <a href="{{ pdf.file_uploaded.url }}" target="_blank">{{ pdf.name }}</a>
+        </div>
+        
+        <h3>Shareable Link for the PDF:</h3>
+        <div class="pdf_link_view">
+            <input type="text" id="shareLink" value="{{ share_url }}" readonly>
+            
+        </div>
+    </div>
+
+    <div class="container_comment">
+        <h3>Comments ({{all_comments|length }}):</h3>
+        {% if error %}
+            <p class="error_msg">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            {% if not request.user.is_authenticated %}
+            <div class="single_comment">
+                <label for="given_name">NAME</label>
+                <input type="text" class="single_comm_name" name="given_name" placeholder="Enter your name" required>
+            </div>
+            {% endif %}
+            <div class="single_comment">
+                <label for="comment">COMMENT</label>
+                <textarea name="comment" placeholder="Enter your comment"  required></textarea>
+            </div>
+            <button type="submit" class="buttonStyle">Post Comment</button>
+        </form>
+
+        <div class="all_comments">
+            {% if all_comments %}
+            {% for comment in all_comments %}
+                <div class="show_comment">
+                    <strong>{{ comment.commenter|default:'Anonymous' }}</strong>
+                    <p>{{ comment.comment }}</p>
+                    <small>{{ comment.created_at|date:"M d, Y g:i A" }}</small>
+                </div>
+            {% endfor %}
+            {% else %}
+            <p class="no_comm">No comments yet. Be the first one to comment!</p>
+        {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+{% endblock %}

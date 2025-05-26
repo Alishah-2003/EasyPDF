@@ -1,0 +1,27 @@
+{% extends 'authentication/format.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>Upload PDF</title>
+</head>
+
+<div class="container_authen">
+    <h1>Upload File</h1>
+    {% if error %}
+    <p class="error_msg">{{ error }}</p>
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="formData">
+            <label for="filename">FILE NAME</label>
+            <input type="text" name="filename" placeholder="File Name" required>
+        </div>
+        <div class="formData">
+            <label for="uploadfile">UPLOAD FILE</label>
+            <input type="file" id="upload_file" name="upload_file" accept=".pdf">
+        </div>
+        <button type="submit" class="button_authen">Upload</button>
+    </div>
+</form>
+{% endblock %}

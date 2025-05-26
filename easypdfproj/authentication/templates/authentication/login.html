@@ -1,0 +1,35 @@
+{% extends 'authentication/format.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>Login | EasyPDF</title>
+</head>
+<body>
+    <div class="container_authen">
+        <h1>Login</h1>
+        <h4>Login to your account.</h4>
+
+        {% if error %}
+            <p class="error_msg">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="formData">
+                <label for="email">EMAIL ID</label>
+                <input type="email" name="email" placeholder="Email ID" required>
+            </div>
+            <div class="formData">
+                <label for="password">PASSWORD</label>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="button_authen">Login</button>
+            <p class="bottomText">Don't have an account? <a href="/auth/signup/">Sign up now!</a></p>
+        </form>
+    </div>
+
+</body>
+
+{% endblock %}

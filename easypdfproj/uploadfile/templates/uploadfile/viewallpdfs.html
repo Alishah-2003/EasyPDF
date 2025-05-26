@@ -1,0 +1,179 @@
+{% extends 'uploadfile/uploadformat.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>View All Files</title>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh; 
+        margin: 0;
+        padding: 0;
+    }
+    .pdf_container{
+        display: grid;
+        justify-content: center;
+        width: 100%;
+        max-width: 1400px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        padding: 20px;
+        margin: 0 auto;
+        animation: fadeInLeft 1s ease-out 0.3s;
+    }
+    .pdf_found{
+        padding:30px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+        backdrop-filter: blur(30px);
+        border: 1px solid white;
+        border-radius: 25px;
+        width:100%;
+        min-width: 250px;
+        min-height: 180px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        animation: fadeInLeft 1s ease-out 0.3s;
+    }
+
+    .go_to_button:hover{
+        transform: translateY(-5px);
+        background-color: beige
+    }
+    input{
+        width:90%;
+        padding:18px;
+        margin:3% 3%;
+        background-color: white;
+        margin:0;
+        font-family: 'Montserrat';
+        font-size: 16px;
+        border-radius: 25px;
+        color:rgb(1, 50, 1);
+    }
+    input::placeholder{
+        opacity: 1;
+        color: rgb(1, 50, 1);
+        font-weight: 500;
+    }
+    .search_container {
+        width: 100%;
+        max-width: 600px;
+        margin: 20px auto;
+        animation: fadeInUp 1s ease-out 0.3s;
+    }
+    form{
+        display:flex;
+        gap:10px;
+        align-items: center;
+        width:100%;
+        max-width: 600px;
+        margin: 0 auto;
+        justify-content: center;
+    }
+    h1{
+        color: white;
+        font-weight: bold;
+        font-family: 'Montserrat';
+        text-align: center;
+        padding:0;
+        font-size: 40px;
+        margin:15px 0px;
+    }
+    
+    .container_view{
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        justify-content:center;
+        text-align: center;
+        width:100%;
+        max-width: 800px;
+        animation: fadeInUp 1s ease-out 0.3s;
+
+    }
+    .buttonIcon{
+        font-family: 'Montserrat';
+        font-weight: bold;
+        font-size: 14px;
+        padding:8px 20px;
+        border-radius: 25px ;
+        cursor: pointer;
+        border:none;
+        background: #4CAF50;
+        color: white;
+
+    }
+    .go_to_button{
+        background-color: white;
+        color:rgb(1, 52, 1);
+        font-family: 'Montserrat';
+        font-size: 18px;
+        font-weight: bold;
+        padding:10px;
+        border-radius: 18px;
+        margin-top: 15px;
+        transition: transform 0.3s ease;
+
+    }
+    @keyframes fadeInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    }
+</style>
+</head>
+<body>
+    <div class="container_view">
+        <h1>Your PDF Files</h1>
+        <div class="search_container">
+            <form method="GET">
+                <input type="text" name="searched" placeholder="Search a file" value="{{ search_query|default:'' }}">
+                <button type="submit" class="buttonIcon"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    
+    <div class="pdf_container">
+        {% if view_pdfs %}
+            {% for pdf in view_pdfs %}
+            <div class="pdf_found">
+                <h3>{{ pdf.name }}</h3>
+                <h4>Uploaded at: {{ pdf.upload_time|date:"M d, Y H:i" }}</h4>
+                <a href="{% url 'share_file' pdf.sharepdf.link %}"><button class="go_to_button">Go To File</button></a>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="no_files">
+            <h3>No PDF files found.</h3>
+            <p>Upload your PDF to get started!</p>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+</body>
+
+{% endblock %}

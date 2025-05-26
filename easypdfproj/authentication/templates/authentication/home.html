@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>EasyPDF</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+        @font-face {
+            font-family: 'Black Mango';
+            src: url("{% static 'fonts/black-mango-bold.ttf' %}") format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Black Mango';
+            src: url("{% static 'fonts\black-mango-regular.ttf' %}") format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            font-family: 'Black Mango';
+            font-weight: bold;
+            color: white;
+            font-size: 55px;
+            padding-bottom: 0;
+            margin:0;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            letter-spacing: 4px;
+        }
+
+        .authen{
+            display: flex;
+            gap:20px;
+            flex-direction: column;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1s both;
+        }
+        body{
+            background-image: url("{% static 'images/greencreate.jpg' %}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            max-width:100%;
+            background-attachment: fixed;
+            min-height:100vh;
+            font-family: 'Montserrat';
+            margin: 0;
+            display: flex;
+            background-position: center;
+            overflow-x: hidden;
+            align-items: center;
+            justify-content: center;
+        }
+        h4{
+            color: white;
+            font-family: 'Montserrat';
+            font-weight: normal;
+            font-size: 16px;
+            padding-bottom:20px;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .buttonStyle{
+            background-color: white;
+            padding:15px 40px;
+            width:270px;
+            border-radius: 25px;
+            color: rgb(1, 42, 1);
+            font-family: 'Montserrat';
+            font-size: 15px;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out 0s;
+        }
+
+        .buttonStyle:hover,.buttonStyle:active{
+            transform: translateY(5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            background-color: beige;
+            
+        }
+
+        .container{
+            text-align: center;
+            width:100%;
+            max-width: 600px;
+            padding:30px 20px;
+        }
+        .upload-icon{
+            color: white;
+            font-size: 70px;
+            margin-bottom: 20px;
+            display: block;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        .buttonStyle:hover::before{
+            left: 100%;
+        }
+
+        @keyframes fadeInUp {
+            from{
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to{
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+            <h1>EasyPDF</h1>
+            <h4>Store and share PDFs with ease.</h4>
+            <div class="authen">
+                <a class="buttonText" href="/auth/login/"><button class="buttonStyle">Login</button></a>
+                <a class="buttonText" href="/auth/signup/"><button class="buttonStyle">Sign Up</button></a>
+            </div>
+    </div>
+</body>
+</html>

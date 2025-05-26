@@ -1,0 +1,124 @@
+{% extends "uploadfile/uploadformat.html" %}
+{% load static %}
+
+{% block content %}
+<head>
+    <title>Dashboard | EasyPDF</title>
+
+<style>
+    .buttonStyle{
+        padding: 20px 50px;
+        background-color: white;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'Montserrat';
+        color: rgb(1, 47, 1);
+        width:100%;
+        min-width: 350px;
+        justify-content: center;
+        text-align: center;
+        border-radius: 25px;
+        margin-bottom: 2%;
+        border:none;
+        display: block;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .buttonStyle:hover,.buttonStyle:active{
+        background-color: beige;
+        transform: translateY(4px);
+    }
+    .container_dash{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding:20px;
+        animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    .mainButton{
+        display: block;
+        width: 100%;
+    }
+    .button_container{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        max-width: 400px;
+        margin-top: 2.5%;
+        justify-content:center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap:20px;
+        padding: 40px;
+        animation: fadeInUp 1s ease-out 0.3s;
+        background: transparent;
+        backdrop-filter: blur(70px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        border-radius: 25px;
+        
+    }
+
+    h1,h2{
+        color: white;
+        font-weight: bold;
+        font-family: 'Montserrat';
+        text-align: center;
+        padding:0;
+        font-size: 40px;
+        margin:15px 0px;
+    }
+
+    h3,h4{
+        color:white;
+        font-family: 'Montserrat';
+        font-size: 16px;
+    }
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    }
+    .alert {
+        padding: 15px;
+        margin: 20px auto;
+        border-radius: 25px;
+        font-family: 'Montserrat';
+        font-weight: bold;
+        max-width: 600px;
+        text-align: center;
+        animation: fadeInUp 1s ease-out 0.3s both;
+    }
+    
+    .alert-success {
+        background-color: white;
+        color: rgb(0, 50, 0);
+        border: 1px solid rgb(1, 48, 1)
+    }
+</style>
+</head>
+<body>
+    <div class="container_dash">
+        <h1>Dashboard</h1>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="button_container">
+            <a class="mainButton" href="/uploadfile/upload_file/"><button class="buttonStyle">Upload a PDF File</button></a>
+
+            <a class="mainButton" href="/uploadfile/viewallpdfs/"><button class="buttonStyle">View All PDFs</button></a>
+        </div>
+    </div>    
+</body>
+{% endblock %}
